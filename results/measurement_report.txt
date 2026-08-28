@@ -1,0 +1,38 @@
+======================================================================
+OPTICAL MEASUREMENT TOOLKIT
+AUTOMATED MEASUREMENT REPORT
+======================================================================
+Generated: 2026-08-27 22:29:10
+
+1. THEORY VS MEASUREMENT
+----------------------------------------------------------------------
+Mean measurement error: 1.21%
+Maximum measurement error: 1.83%
+
+2. REPEATABILITY AND UNCERTAINTY
+----------------------------------------------------------------------
+Mean measurement standard deviation: 0.0067 mm
+Maximum measurement standard deviation: 0.0086 mm
+
+3. ELLIPTICAL BEAM VALIDATION
+----------------------------------------------------------------------
+True ellipticity: 1.3333
+Measured ellipticity: 1.3336
+Ellipticity error: 0.02%
+
+4. NOISE SENSITIVITY
+----------------------------------------------------------------------
+Highest tested noise level: 20.0
+Radius X error at highest noise: 4.13%
+Radius Y error at highest noise: 4.32%
+Ellipticity error at highest noise: 0.20%
+
+5. ENGINEERING SUMMARY
+----------------------------------------------------------------------
+The Gaussian fitting approach successfully recovered beam dimensions from simulated intensity images.
+Measurement error remained low under nominal conditions and increased with simulated sensor noise.
+Ellipticity measurements remained comparatively robust under increased noise.
+
+======================================================================
+END OF REPORT
+======================================================================
