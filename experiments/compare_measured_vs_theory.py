@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+from src.calibration import PixelCalibration
 
 from src.beam_fitting import (
     extract_horizontal_profile,
@@ -13,7 +14,9 @@ from src.beam_simulator import gaussian_beam_radius
 from src.metrics import percentage_error
 
 
-PIXEL_SCALE = 0.05
+CALIBRATION = PixelCalibration(
+mm_per_pixel=0.05
+)
 W0 = 0.05
 WAVELENGTH = 0.00065
 
@@ -56,8 +59,8 @@ for distance in distances_mm:
         sigma
     )
 
-    measured_radius_mm = (
-        measured_radius_pixels * PIXEL_SCALE
+    measured_radius_mm = CALIBRATION.pixels_to_mm (
+        measured_radius_pixels
     )
 
     theoretical_radius_mm = gaussian_beam_radius(

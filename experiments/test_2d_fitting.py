@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-
+from src.calibration import PixelCalibration
 from src.beam_fitting import (
     gaussian_2d,
     fit_gaussian_2d,
@@ -10,7 +10,9 @@ from src.beam_fitting import (
 
 
 IMAGE_PATH = "data/raw/simulated/beam_300mm.png"
-PIXEL_SCALE = 0.05
+CALIBRATION = PixelCalibration(
+mm_per_pixel=0.05
+)
 
 
 image = cv2.imread(
@@ -43,8 +45,13 @@ radius_x_pixels, radius_y_pixels = (
     )
 )
 
-radius_x_mm = radius_x_pixels * PIXEL_SCALE
-radius_y_mm = radius_y_pixels * PIXEL_SCALE
+radius_x_mm = CALIBRATION.pixels_to_mm(
+ radius_x_pixels
+
+)
+radius_y_mm = CALIBRATION.pixels_to_mm(
+radius_y_pixels
+)
 
 ellipticity = radius_x_mm / radius_y_mm
 

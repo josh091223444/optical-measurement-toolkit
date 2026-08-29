@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from src.beam_simulator import generate_elliptical_beam
-
+from src.calibration import PixelCalibration
 from src.beam_fitting import (
     fit_gaussian_2d,
     sigma_to_beam_radii
@@ -12,22 +12,23 @@ from src.beam_fitting import (
 from src.metrics import percentage_error
 
 
-PIXEL_SCALE = 0.05
+CALIBRATION = PixelCalibration(
+mm_per_pixel=0.05
+)
 
-# Known beam parameters
+
 TRUE_WX = 1.20
 TRUE_WY = 0.90
 
 
-# Generate synthetic elliptical beam
+
 image = generate_elliptical_beam(
     wx=TRUE_WX,
     wy=TRUE_WY,
-    pixel_scale=PIXEL_SCALE
+    pixel_scale=CALIBRATION.mm_per_pixel
 )
 
 
-# Fit the entire 2D image
 params, covariance = fit_gaussian_2d(
     image
 )
@@ -43,7 +44,6 @@ params, covariance = fit_gaussian_2d(
 ) = params
 
 
-# Convert sigma to 1/e² beam radii
 measured_wx_pixels, measured_wy_pixels = (
     sigma_to_beam_radii(
         sigma_x,
@@ -52,16 +52,15 @@ measured_wx_pixels, measured_wy_pixels = (
 )
 
 
-measured_wx = (
-    measured_wx_pixels * PIXEL_SCALE
+measured_wx = CALIBRATION.pixels_to_mm(
+    measured_wx_pixels 
 )
 
-measured_wy = (
-    measured_wy_pixels * PIXEL_SCALE
+measured_wy = CALIBRATION.pixels_to_mm (
+    measured_wy_pixels 
 )
 
 
-# Calculate errors
 error_x = percentage_error(
     measured_wx,
     TRUE_WX
@@ -73,7 +72,7 @@ error_y = percentage_error(
 )
 
 
-# Calculate ellipticity
+
 measured_ellipticity = (
     measured_wx / measured_wy
 )
